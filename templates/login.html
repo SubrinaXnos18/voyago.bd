@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+     <style>
+        /* Reset and global styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Video Background */
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1; /* Ensure the video is behind the content */
+            object-fit: cover; /* Make sure the video covers the entire screen */
+            opacity: 0.7; /* Optional: Lower opacity for readability */
+        }
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        /* Container for the split sections */
+        .container {
+            width: 700px;
+            height: 400px;
+            display: flex;
+            box-shadow: 10px 10px 15px rgba(0, 0, 0, 1);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            background-color: transparent;
+        }
+
+        /* Login section styles */
+        .login-section {
+            width: 50%;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.8); /* Transparent white */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #333;
+            transform: scale(1.05); /* Slight zoom effect */
+        }
+
+        p {
+            margin-top: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        p a {
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+
+        /* Welcome section styles */
+        .welcome-section {
+            width: 50%;
+            background-color: black;
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            clip-path: polygon(0% 0, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        .welcome-logo {
+            width: 100px; /* Adjust the logo size */
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .welcome-section h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .welcome-section p {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+ <!-- Video Background -->
+    <video autoplay muted loop id="background-video">
+        <source src="{% static 'background.mp4'%}" type="video/mp4">
+    </video>
+
+    <!-- Container with Login and Welcome Sections -->
+    <div class="container">
+        <!-- Login Section -->
+        <div class="login-section">
+            <form method="post">
+                {% csrf_token %}
+                <h2>Login</h2>
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter Username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter Password" required>
+                </div>
+                <button type="submit">Login</button>
+                <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+            </form>
+        </div>
+
+        
+        <div class="welcome-section">
+            <img src="{% static 'logo.png' %}" alt="Logo" class="welcome-logo">
+            <h2>WELCOME BACK!</h2>
+            <p>Fill up the required area more carefully</p>
+        </div>
+    </div>
+</body>
+</html>
