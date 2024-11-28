@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking</title>
+      <style>
+        /* Center the container on the page */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: rgba(42, 129, 71, 0.71); /* Light background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .booking-container {
+            background-color: rgb(246, 227, 110); /* Transparent white */
+            border-radius: 10px; /* Rounded corners */
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333; /* Dark text color */
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #28a745; /* Green button */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s; /* Add hover transition */
+        }
+
+        button:hover {
+            background-color: #218838; /* Darker green on hover */
+            transform: scale(1.05); /* Slight zoom effect */
+        }
+    </style>
+</head>
+<body>
+ <div class="booking-container">
+        <h1>Book Package: {{ package.title }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="travel_date">Select Travel Date:</label>
+            <input type="date" id="travel_date" name="travel_date" required>
+            <button type="submit">Confirm Booking</button>
+        </form>
+    </div>
+
+</body>
+</html>
