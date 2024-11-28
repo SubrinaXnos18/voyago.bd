@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tour Packages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #9bed81;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Navbar styling */
+        nav {
+            background-color: #185a05;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav . nav .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        nav .nav-right {
+            margin-left: auto;
+        }
+
+        /* Container styles */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .packages, .bookings {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .package-box, .booking-box {
+            background: rgba(236, 226, 185, 0.6);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .package-box:hover, .booking-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .package-box strong, .booking-box strong {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .package-box a, .booking-box a {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #fff;
+            background: #007bff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .package-box a:hover, .booking-box a:hover {
+            background: #0056b3;
+        }
+
+        .empty-message {
+            text-align: center;
+            font-style: italic;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-right">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'user_profile' %}">Profile</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <h1>Tour Packages</h1>
+    <div class="container">
+        <div class="packages">
+            {% for package in packages %}
+                <div class="package-box">
+                    <strong>{{ package.title }}</strong><br>
+                    Description: {{ package.description }}<br>
+                    Duration: {{ package.duration }} days<br>
+                    Price: ${{ package.price }}<br>
+                    <a href="{% url 'book_package' package.package_id %}">Book Now</a>
+                </div>
+            {% empty %}
+                <div class="empty-message">No packages available at the moment.</div>
+            {% endfor %}
+        </div>
+
+        <h2>Your Bookings</h2>
+        <div class="bookings">
+            {% for booking in bookings %}
+                <div class="booking-box">
+                    <strong>{{ booking.package.title }}</strong><br>
+                    Travel Date: {{ booking.travel_date }}<br>
+                    Status: {{ booking.status }}<br>
+                    {% if booking.status == "Confirmed" %}
+                        <a href="{% url 'cancel_booking' booking.booking_id %}">Cancel</a>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <div class="empty-message">No bookings yet.</div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
